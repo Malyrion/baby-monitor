@@ -1,0 +1,17 @@
+{
+    "theme_color": "#ffffff",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Example",
+    "short_name": "Nextjs PWA",
+    "description": "the boilerplate code necessary for creating a progressive web application with nextjs framework",
+    "icons": [
+        {
+            "src": "/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        }
+    ]
+}
