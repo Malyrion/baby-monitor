@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { bottomNavigation } from '../common/navigation';
-import styles from '../../styles/BottomNav.module.css';
+import styles from '../styles/BottomNav.module.css';
 
 /**
  * It's a React component that renders a bottom navigation bar with links to the home page, the facts

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { BabySvg } from '../svg/index';
 import NavBar from './NavBar';
-import styles from '../../styles/Header.module.css';
+import styles from '../styles/Header.module.css';
 
 /**
  * It returns a header element with a logo, a title, and a navigation bar

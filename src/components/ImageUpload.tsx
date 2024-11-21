@@ -1,16 +1,18 @@
 import { useState, useRef, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
-import { useWebSocket } from 'pages/contexts/WebSocketContext';
+import { useTemperature } from '@/contexts/TemperatureContext';
 
 export default function ImageUpload() {
   const [image, setImage] = useState<string | null>(null);
-  const { temperature } = useWebSocket(); // Access the temperature from context
+  const { currentTemperature: temperature } = useTemperature(); // Updated property name
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [fileName, setFileName] = useState<string>('');
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
+    setFileName(file.name);
     const reader = new FileReader();
     reader.onload = (event) => {
       setImage(event.target?.result as string);
@@ -23,16 +25,24 @@ export default function ImageUpload() {
   const uploadImage = async () => {
     if (!image) return;
 
+    const currentTemp = temperature || 'No temperature reading available';
+    console.log('Sending temperature:', currentTemp);
+
     try {
       const response = await axios.post('/api/upload', {
-        image, // Base64 string of the image
-        fileName: 'uploaded-image.jpg', // Add a default file name
-        temperature: temperature || 'Unavailable', // Include temperature from context
+        image,
+        fileName: fileName,
+        temperature: currentTemp,
       });
+
+      console.log('Response metadata:', response.data.metadata);
 
       alert(
         `Image uploaded successfully.\n\nMetadata:\nImage ID: ${response.data.metadata.ImageID}\nTemperature: ${response.data.metadata.Temperature}\nTimestamp: ${response.data.metadata.UploadTimestamp}`
       );
+      
+      setImage(null); // Reset the image state after successful upload
+      setFileName(''); // Reset filename after successful upload
     } catch (error) {
       console.error('Error uploading image:', error);
       alert('Failed to upload image. Please try again.');

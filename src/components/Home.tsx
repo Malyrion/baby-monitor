@@ -1,6 +1,6 @@
 import Link from 'next/link';
 // import { DOCS_URL } from '@constants/index';
-import styles from '../../styles/Home.module.css';
+import styles from '../styles/Home.module.css';
 import { ImageUpload } from './index';
 
 import TemperatureDisplay from './TemperatureDisplay';

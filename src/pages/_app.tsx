@@ -1,10 +1,10 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { WebSocketProvider } from './contexts/WebSocketContext'
+import { TemperatureProvider } from '../contexts/TemperatureContext'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <WebSocketProvider>
+    <TemperatureProvider>
   <Component {...pageProps} />
-  </WebSocketProvider>)
+  </TemperatureProvider>)
 }

@@ -1,9 +1,9 @@
-import BottomNav from '../components/BottomNav';
+import BottomNav from './BottomNav';
 // import FactCard from '../components/facts/FactCard';
-import Home from '../components/Home';
-import Header from '../components/Header';
-import NavBar from '../components/NavBar';
-import Meta from '../components/Meta';
+import Home from './Home';
+import Header from './Header';
+import NavBar from './NavBar';
+import Meta from './Meta';
 import TemperatureDisplay from './TemperatureDisplay';
 import ImageUpload from './ImageUpload';
 
