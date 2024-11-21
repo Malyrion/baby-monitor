@@ -1,59 +1,58 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import io, { Socket } from 'socket.io-client'
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { io, Socket } from 'socket.io-client';
 
+// Define the context type
 interface WebSocketContextType {
-  socket: Socket | null
-  isConnected: boolean
-  currentTemperature: string | null
+  temperature: string | null;
+  socket: Socket | null;
 }
 
-const WebSocketContext = createContext<WebSocketContextType>({
-  socket: null,
-  isConnected: false,
-  currentTemperature: null
-})
+// Create the context
+const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
 
-export const useWebSocket = () => useContext(WebSocketContext)
-
-export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [socket, setSocket] = useState<Socket | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
-  const [currentTemperature, setCurrentTemperature] = useState<string | null>(null)
+export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
+  const [temperature, setTemperature] = useState<string | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     const socketInitializer = async () => {
-      await fetch('/api/temperature')
-      const newSocket = io()
-
+      await fetch('/api/temperatures'); // Ensures the WebSocket server is ready
+      const newSocket = io();
+  
       newSocket.on('connect', () => {
-        console.log('WebSocket connected')
-        setIsConnected(true)
-      })
-
-      newSocket.on('disconnect', () => {
-        console.log('WebSocket disconnected')
-        setIsConnected(false)
-      })
-
+        console.log('Connected to WebSocket');
+      });
+  
       newSocket.on('temperature', (data: string) => {
-        setCurrentTemperature(data)
-      })
-
-      setSocket(newSocket)
-    }
-
-    socketInitializer()
-
+        console.log(`Received temperature: ${data}`);
+        setTemperature(data); // Update the temperature state
+      });
+  
+      setSocket(newSocket);
+    };
+  
+    socketInitializer();
+  
     return () => {
       if (socket) {
-        socket.disconnect()
+        socket.disconnect(); // Clean up the socket on unmount
       }
-    }
-  }, [])
+    };
+  }, []);
+  
 
   return (
-    <WebSocketContext.Provider value={{ socket, isConnected, currentTemperature }}>
+    <WebSocketContext.Provider value={{ temperature, socket }}>
       {children}
     </WebSocketContext.Provider>
-  )
-}
+  );
+};
+
+// Custom hook to use the WebSocket context
+export const useWebSocket = () => {
+  const context = useContext(WebSocketContext);
+  if (!context) {
+    throw new Error('useWebSocket must be used within a WebSocketProvider');
+  }
+  return context;
+};

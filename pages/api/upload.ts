@@ -1,41 +1,44 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
+import { NextApiRequest, NextApiResponse } from 'next';
+import TemperatureManager from '../utils/TemperatureManager'; // Ensure correct path
 
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
-})
+const metadataStore = [];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' })
-  }
+  if (req.method === 'POST') {
+    try {
+      const { fileName, image } = req.body;
+      const imageID = uuidv4();
+      const bucketName = 'your-mock-bucket';
+      const region = 'your-region';
 
-  try {
-    const { image } = req.body
-    const base64Data = image.replace(/^data:image\/\w+;base64,/, '')
-    const buffer = Buffer.from(base64Data, 'base64')
+      // Generate a mock S3 URL
+      const mockS3URL = `https://${bucketName}.s3.${region}.amazonaws.com/${imageID}.jpg`;
 
-    const fileName = `${uuidv4()}.jpg`
-    const params = {
-      Bucket: process.env.S3_BUCKET_NAME,
-      Key: fileName,
-      Body: buffer,
-      ContentType: 'image/jpeg',
+      // Fetch the latest temperature
+      const latestTemperature = TemperatureManager.getInstance().getTemperature();
+      console.log(`Temperature in Upload API: ${latestTemperature}`);
+
+      // Create metadata
+      const metadata = {
+        ImageID: imageID,
+        FileName: fileName || 'unknown-file',
+        S3URL: mockS3URL,
+        UploadTimestamp: new Date().toISOString(),
+        Temperature: latestTemperature !== -1 ? latestTemperature : 'Unavailable (No updates received yet)',
+      };
+
+      // Store metadata
+      metadataStore.push(metadata);
+      console.log('Metadata stored:', metadata);
+
+      res.status(200).json({ success: true, metadata });
+    } catch (error) {
+      console.error('Error processing request:', error);
+      res.status(500).json({ success: false, error: 'Failed to store metadata' });
     }
-
-    const command = new PutObjectCommand(params)
-    await s3Client.send(command)
-
-    const imageUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`
-
-    res.status(200).json({ url: imageUrl })
-  } catch (error) {
-    console.error('Error uploading to S3:', error)
-    res.status(500).json({ message: 'Error uploading image' })
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-}
+};
