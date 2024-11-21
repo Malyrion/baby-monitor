@@ -1,73 +1,78 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { Socket, io } from 'socket.io-client';
+import type { HistoricalReadingsResponse } from '../pages/api/temperatures';
+import type { CurrentTemperatureResponse } from '../pages/api/currentTemp';
 
 interface TemperatureContextType {
   currentTemperature: string | null;
+  historicalReadings: HistoricalReadingsResponse['readings'];
   isLoading: boolean;
-  getLatestTemperature: () => string | null;
+  error: string | null;
+  refreshHistory: () => Promise<void>;
 }
 
 const TemperatureContext = createContext<TemperatureContextType | undefined>(undefined);
 
-export const TemperatureProvider = ({ children }: { children: ReactNode }) => {
+export const TemperatureProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentTemperature, setCurrentTemperature] = useState<string | null>(null);
+  const [historicalReadings, setHistoricalReadings] = useState<HistoricalReadingsResponse['readings']>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const socketRef = useRef<Socket | null>(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    const socketInitializer = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch('/api/temperatures');
-        if (!response.ok) {
-          console.error('Temperature API error:', response.status);
-          setIsLoading(false);
-          return;
+    mountedRef.current = true;
+
+    if (!socketRef.current) {
+      console.log('Initializing socket connection...');
+      const socket = io({
+        path: '/api/socket',
+        reconnectionAttempts: 3,
+        reconnectionDelay: 1000,
+      });
+
+      socket.on('connect', () => {
+        if (mountedRef.current) {
+          console.log('Socket connected successfully');
+          setError(null);
         }
-        
-        const newSocket = io({
-          path: '/api/socket',
-          addTrailingSlash: false
-        });
-    
-        newSocket.on('connect', () => {
-          console.log('Connected to WebSocket');
-          newSocket.emit('getTemperature');
-        });
-    
-        newSocket.on('connect_error', (error) => {
-          console.error('Socket connection error:', error);
+      });
+
+      socket.on('temperature', (temp: string) => {
+        if (mountedRef.current) {
+          console.log('Received temperature:', temp);
+          setCurrentTemperature(temp);
           setIsLoading(false);
-        });
-    
-        newSocket.on('temperature', (data: string) => {
-          console.log(`Received temperature: ${data}`);
-          setCurrentTemperature(data);
-          setIsLoading(false);
-        });
-    
-        setSocket(newSocket);
-      } catch (error) {
-        console.error('Socket initialization error:', error);
-        setIsLoading(false);
-      }
-    };
-    
-    socketInitializer();
-  
+        }
+      });
+
+      socket.on('connect_error', (err) => {
+        if (mountedRef.current) {
+          console.error('Socket connection error:', err);
+          setError('Connection error');
+        }
+      });
+
+      socketRef.current = socket;
+    }
+
     return () => {
-      if (socket) {
-        socket.disconnect();
+      mountedRef.current = false;
+      if (socketRef.current) {
+        console.log('Cleaning up socket connection...');
+        socketRef.current.disconnect();
+        socketRef.current = null;
       }
     };
   }, []);
 
-  const getLatestTemperature = () => currentTemperature;
-
   const value = {
     currentTemperature,
+    historicalReadings,
     isLoading,
-    getLatestTemperature
+    error,
+    refreshHistory: async () => {} // Temporarily disabled
   };
 
   return (

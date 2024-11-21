@@ -10,14 +10,14 @@ const bottomNavigation: cat.BottomNavigation = [
   },
   {
     id: 2,
-    label: 'Image',
-    href: '/image',
+    label: 'Insights',
+    href: '/insights',
     icon: <FactSvg />,
   }
 ];
 
 const navBar: cat.Navbar = [
-    { id: 3, label: 'Image', href: '/image', external: false },
+    { id: 3, label: 'Insights', href: '/Insights', external: false },
 ];
 
 export { bottomNavigation, navBar };

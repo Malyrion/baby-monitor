@@ -45,19 +45,7 @@ function Meta(): JSX.Element {
           property="og:image"
           content="https://nextjs-pwa-template-repo.vercel.app/icons/og-image.png"
         />
-        {/* TWITTER */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@AjayKanniyappan" />
-        <meta property="twitter:url" content="https://nextjs-pwa-template-repo.vercel.app" />
-        <meta property="twitter:title" content="The Next.js Progressive Web App Template" />
-        <meta
-          property="twitter:description"
-          content="A Solid Foundation for Building Scalable and Efficient Progressive Web Application!"
-        />
-        <meta
-          property="twitter:image"
-          content="https://nextjs-pwa-template-repo.vercel.app/icons/og-image.png"
-        />
+     
       </>
     );
   }
