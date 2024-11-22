@@ -71,57 +71,64 @@ And S3 bucket with the name of your choice and change the name in the `.env.loca
 
 
 ```plaintext
-├── public/ # Static files
-│   ├── manifest.json          # PWA manifest
-│   ├── sw.js                  # Service Worker
-│   └── workbox-.js            # PWA workbox
+├── public/                        # Static files directory
+│   ├── manifest.json             # PWA configuration and metadata
+│   ├── sw.js                     # Service Worker for offline functionality
+│   └── workbox-.js              # PWA workbox utilities
 │
 ├── src/
-│   ├── components/            # React components
-│   │   ├── common/            # Shared components
-│   │   │   ├── layouts/       # Layout components
-│   │   │   │   ├── Page.tsx
-│   │   │   │   └── Section.tsx
-│   │   │   ├── BottomNav.tsx
-│   │   │   └── HeaderNav.tsx
-│   │   ├── Home.tsx           # Main page component
-│   │   ├── ImageUpload.tsx    # Image upload component
-│   │   ├── Meta.tsx           # Meta tags component
-│   │   ├── TemperatureDisplay.tsx
-│   │   └── TemperatureGraph.tsx
+│   ├── components/               # React components directory
+│   │   ├── common/              # Shared/reusable components
+│   │   │   ├── layouts/         # Layout components
+│   │   │   │   ├── Page.tsx    # Base page layout wrapper
+│   │   │   │   └── Section.tsx # Section container component
+│   │   │   ├── Alert.tsx       # Alert system component for notifications
+│   │   │   ├── BottomNav.tsx   # Bottom navigation bar
+│   │   │   └── HeaderNav.tsx   # Header navigation bar
+│   │   │
+│   │   ├── Home.tsx            # Main page component with temperature and upload
+│   │   ├── ImageUpload.tsx     # Handles image upload with drag-and-drop
+│   │   ├── Meta.tsx            # Head metadata component
+│   │   ├── TemperatureDisplay.tsx  # Real-time temperature display
+│   │   └── TemperatureGraph.tsx    # Temperature history visualization
 │   │
-│   ├── pages/                 # Next.js pages
-│   │   ├── api/               # API routes
-│   │   │   ├── currentTemp.ts
-│   │   │   ├── socket.ts
-│   │   │   ├── temperatures.ts
-│   │   │   └── upload.ts
-│   │   ├── app.tsx            # App wrapper
-│   │   ├── document.tsx       # Document wrapper
-│   │   ├── index.tsx          # Homepage
-│   │   └── insights.tsx       # Insights page
+│   ├── contexts/                # React Context providers
+│   │   ├── AlertContext.tsx    # Alert system state management
+│   │   └── TemperatureContext.tsx  # Temperature data state management
 │   │
-│   ├── services/              # Business logic
-│   │   ├── imageService.ts
-│   │   ├── s3Service.ts
-│   │   └── temperatureService.ts
+│   ├── pages/                   # Next.js pages directory
+│   │   ├── api/                # API routes
+│   │   │   ├── currentTemp.ts  # Current temperature endpoint
+│   │   │   ├── socket.ts       # WebSocket connection handler
+│   │   │   ├── temperatures.ts # Temperature history endpoint
+│   │   │   └── upload.ts       # Image upload endpoint
+│   │   │
+│   │   ├── _app.tsx           # Next.js app wrapper with providers
+│   │   ├── _document.tsx      # Custom document configuration
+│   │   ├── index.tsx          # Homepage route
+│   │   └── insights.tsx       # Temperature insights page
 │   │
-│   ├── svg/                   # SVG components
-│   │   ├── BabySvg.tsx
-│   │   ├── HomeSvg.tsx
-│   │   └── index.ts
+│   ├── services/               # Business logic layer
+│   │   ├── imageService.ts    # Image upload and metadata handling
+│   │   ├── s3Service.ts       # AWS S3 interaction service
+│   │   └── temperatureService.ts  # Temperature data management
 │   │
-│   └── styles/                # Styling
-│       └── globals.css        # Global styles
+│   ├── svg/                    # SVG components
+│   │   ├── BabySvg.tsx        # Baby icon component
+│   │   ├── HomeSvg.tsx        # Home icon component
+│   │   └── index.ts           # SVG components export
+│   │
+│   └── styles/                 # Styling directory
+│       └── globals.css         # Global styles and Tailwind imports
 │
-├── .eslintrc.json             # ESLint configuration
-├── .gitignore                 # Git ignore rules
-├── next.config.js             # Next.js configuration
-├── package.json               # Project dependencies
-├── postcss.config.js          # PostCSS configuration
-├── tailwind.config.js         # Tailwind CSS configuration
-├── tsconfig.json              # TypeScript configuration
-└── tsconfig.node.json         # Node TypeScript configuration
+├── .eslintrc.json              # ESLint configuration
+├── .gitignore                  # Git ignore patterns
+├── next.config.js              # Next.js configuration
+├── package.json                # Project dependencies and scripts
+├── postcss.config.js           # PostCSS configuration for Tailwind
+├── tailwind.config.js          # Tailwind CSS configuration
+├── tsconfig.json               # TypeScript configuration
+└── tsconfig.node.json          # Node-specific TypeScript config
 
 ```
 ## Images ##
