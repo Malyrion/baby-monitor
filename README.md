@@ -65,9 +65,34 @@ Make sure if you want to test your AWS, that you give the read and write premiss
 - Temperature
 - Image
 
-  You can follow the structure of the tabels as they are given in the images below
+You can follow the structure of the tabels as they are given in the images below,
+but they should look like this : 
 
-And S3 bucket with the name of your choice and change the name in the `.env.local` file. (As your s3 bucket name needs to be unique)
+### Temperature
+
+| **Field**         | **Type**   | **Description**                                                |
+|--------------------|------------|----------------------------------------------------------------|
+| `temperatureId`   | `String`   | Primary key - Unique identifier for each temperature reading. |
+| `temperature`     | `String`   | The temperature value.                                        |
+| `timestamp`       | `String`   | ISO timestamp of when the reading was taken.                 |
+
+---
+
+### Image
+
+| **Field**           | **Type**   | **Description**                                                |
+|----------------------|------------|----------------------------------------------------------------|
+| `imageId`           | `String`   | Primary key - Unique identifier for each image.              |
+| `fileName`          | `String`   | Original name of the uploaded file.                          |
+| `s3Url`             | `String`   | URL where the image is stored in S3.                         |
+| `uploadTimestamp`   | `String`   | ISO timestamp of when the image was uploaded.                |
+| `temperature`       | `String`   | Temperature reading at the time of upload.                   |
+| `childId`           | `String`   | Identifier for associated child.                             |
+| `familyId`          | `String`   | Identifier for associated family.                            |
+| `userId`            | `String`   | Identifier for uploading user.  
+
+ 
+And S3 bucket with the name of your choice in the new `.env.local` file.
 
 ## Folder structure ##
 
