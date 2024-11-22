@@ -6,7 +6,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
 
 interface TemperatureReading {
@@ -76,7 +76,7 @@ const TemperatureGraph = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.8)',
                 border: 'none',
                 borderRadius: '4px',
-                padding: '8px'
+                padding: '8px',
               }}
             />
             <Line

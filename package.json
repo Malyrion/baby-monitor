@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next -H 0.0.0.0",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.696.0",

@@ -31,7 +31,7 @@ interface PageProps {
 const Page: React.FC<PageProps> = ({ 
   title, 
   className, 
-  children 
+  children, 
 }): JSX.Element => {
   // Generate page title - special case for home page
   const pageTitle = title === 'Home' ? 'ButtonTech' : `ButtonTech | ${title}`;

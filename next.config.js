@@ -16,7 +16,7 @@ const nextConfig = {
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
     S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
   },
-  output: 'export',
+  output: 'standalone',
 };
 
 const withPWA = require("next-pwa")({

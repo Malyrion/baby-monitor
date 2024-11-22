@@ -1,4 +1,4 @@
-import { ScanCommand } from "@aws-sdk/client-dynamodb";
+import { ScanCommand } from '@aws-sdk/client-dynamodb';
 import { dynamoDBClient } from '../lib/dynamodb/config';
 
 export interface TemperatureReading {
@@ -9,18 +9,22 @@ export interface TemperatureReading {
 
 class TemperatureService {
   private MIN_TEMP = 34;
+
   private MAX_TEMP = 38;
+
   private TEMP_INCREMENT = 0.4;
+
   private currentTemp = this.MIN_TEMP;
+
   private isIncreasing = true;
 
-  async getLatestReadings(limit: number = 10): Promise<TemperatureReading[]> {
+  async getLatestReadings(limit = 10): Promise<TemperatureReading[]> {
     try {
       const command = new ScanCommand({
-        TableName: "Temperature", // Changed to Temperatures table
-        ProjectionExpression: "temperatureId, temperature, #ts",
+        TableName: 'Temperature', // Changed to Temperatures table
+        ProjectionExpression: 'temperatureId, temperature, #ts',
         ExpressionAttributeNames: {
-          "#ts": "timestamp"
+          '#ts': 'timestamp',
         },
         Limit: limit,
       });
@@ -34,9 +38,9 @@ class TemperatureService {
       const readings = response.Items.map(item => ({
         readingId: item.temperatureId.S || '',
         temperature: item.temperature.S || '',
-        timestamp: item.timestamp.S || ''
+        timestamp: item.timestamp.S || '',
       })).sort((a, b) => 
-        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
       );
 
       return readings;

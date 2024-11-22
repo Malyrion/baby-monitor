@@ -1,4 +1,4 @@
-import { Insights, HomeSvg } from "../../svg/index";
+import { Insights, HomeSvg } from '../../svg/index';
 
 
 /**
@@ -45,14 +45,14 @@ type Navbar = NavbarItem[];
 const bottomNavigation: BottomNavigation = [
   {
     id: 1,
-    label: "Home",
-    href: "/",
+    label: 'Home',
+    href: '/',
     icon: <HomeSvg />,
   },
   {
     id: 2,
-    label: "Insights",
-    href: "/insights",
+    label: 'Insights',
+    href: '/insights',
     icon: <Insights />,
   },
 ];
@@ -64,8 +64,8 @@ const bottomNavigation: BottomNavigation = [
 const navBar: Navbar = [
   {
     id: 1,
-    label: "Insights",
-    href: "/insights",
+    label: 'Insights',
+    href: '/insights',
     external: false,
   },
 ];

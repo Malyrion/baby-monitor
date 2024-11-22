@@ -45,7 +45,7 @@ const ImageUpload: React.FC = () => {
     console.log('File details:', {
       name: file.name,
       type: file.type,
-      size: file.size
+      size: file.size,
     });
 
     setFileName(file.name);
@@ -65,9 +65,9 @@ const ImageUpload: React.FC = () => {
   const { getRootProps, getInputProps, fileRejections } = useDropzone({ 
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png']
+      'image/*': ['.jpeg', '.jpg', '.png'],
     },
-    maxSize: 10 * 1024 * 1024 // 10MB limit
+    maxSize: 10 * 1024 * 1024, // 10MB limit
   });
 
   /**
@@ -152,9 +152,9 @@ const ImageUpload: React.FC = () => {
                 disabled={isUploading}
                 className={`mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
                   ${isUploading 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-green-600 hover:bg-green-700'
-                  }`}
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-green-600 hover:bg-green-700'
+            }`}
               >
                 {isUploading ? 'Uploading...' : 'Upload'}
               </button>

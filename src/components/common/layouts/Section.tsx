@@ -26,7 +26,7 @@ interface SectionProps {
  */
 const Section: React.FC<SectionProps> = ({ 
   className, 
-  children 
+  children, 
 }): JSX.Element => {
   return (
     <section className={className}>

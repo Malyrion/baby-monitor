@@ -1,6 +1,6 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { TemperatureProvider } from '../contexts/TemperatureContext'
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import { TemperatureProvider } from '../contexts/TemperatureContext';
 import { Nunito } from '@next/font/google';
 import { AlertProvider } from '../contexts/AlertContext';
 import { AlertContainer } from '../components/common/Alert';
@@ -21,5 +21,5 @@ export default function App({ Component, pageProps }: AppProps) {
         </main>
       </TemperatureProvider>
     </AlertProvider>
-  )
+  );
 }
