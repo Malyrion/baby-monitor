@@ -30,7 +30,7 @@ const TemperatureDisplay: React.FC<TemperatureDisplayProps> = ({ className }) =>
 
     const temp = parseFloat(currentTemperature);
     const hasTemperatureWarning = alerts.some(
-      alert => alert.type === 'warning' && alert.message.includes('Temperature')
+      alert => alert.type === 'warning' && alert.message.includes('Temperature'),
     );
     
     // Check if temperature is within normal range

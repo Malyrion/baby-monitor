@@ -35,13 +35,13 @@ export function AlertProvider({ children }: { children: React.ReactNode }) {
     // For temperature warnings, remove any existing temperature warnings first
     if (type === 'warning' && message.includes('Temperature')) {
       setAlerts(prev => prev.filter(alert => 
-        !(alert.type === 'warning' && alert.message.includes('Temperature'))
+        !(alert.type === 'warning' && alert.message.includes('Temperature')),
       ));
     }
 
     // For other alerts, check for exact duplicates
     const existingAlert = alerts.find(
-      alert => alert.message === message && alert.type === type
+      alert => alert.message === message && alert.type === type,
     );
 
     if (existingAlert) {

@@ -13,5 +13,5 @@ export {
   Meta, 
   TemperatureDisplay, 
   ImageUpload,
-  TemperatureGraph 
+  TemperatureGraph, 
 };

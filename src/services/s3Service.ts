@@ -1,11 +1,11 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 console.log('Loading environment variables...');
 console.log({
   bucket: process.env.S3_BUCKET_NAME,
   region: process.env.REGION,
   hasAccessKey: !!process.env.ACCESS_KEY_ID,
-  hasSecretKey: !!process.env.SECRET_ACCESS_KEY
+  hasSecretKey: !!process.env.SECRET_ACCESS_KEY,
 });
 
 const bucketName = process.env.S3_BUCKET_NAME;
@@ -24,12 +24,12 @@ const s3Client = new S3Client({
 export async function uploadToS3(
   file: string,
   fileName: string,
-  contentType: string
+  contentType: string,
 ): Promise<string> {
   console.log('Upload parameters:', {
     bucket: bucketName,
     fileName,
-    contentType
+    contentType,
   });
 
   const base64Data = file.replace(/^data:image\/\w+;base64,/, '');

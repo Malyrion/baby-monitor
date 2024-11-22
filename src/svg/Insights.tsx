@@ -13,9 +13,9 @@ interface SvgProps {
 
 const FactSvg: React.FC<SvgProps> = ({ 
   className,
-  width = "25",
-  height = "25",
-  color = "currentColor"
+  width = '25',
+  height = '25',
+  color = 'currentColor',
 }): JSX.Element => {
   return (
     <svg 

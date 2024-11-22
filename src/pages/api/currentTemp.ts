@@ -8,7 +8,7 @@ export interface CurrentTemperatureResponse {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<CurrentTemperatureResponse | { error: string }>
+  res: NextApiResponse<CurrentTemperatureResponse | { error: string }>,
 ) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -19,7 +19,7 @@ export default async function handler(
     
     return res.status(200).json({
       temperature,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
     console.error('Error generating temperature:', error);

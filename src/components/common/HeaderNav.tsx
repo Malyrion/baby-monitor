@@ -49,9 +49,9 @@ function HeaderNav(): JSX.Element {
                   className={`
                     inline-flex items-center
                     ${router.pathname === links.href 
-                      ? 'text-[#0099FF] dark:text-[#E6DDC4]' // active link
-                      : 'text-zinc-600 hover:text-[#000000] dark:text-zinc-400 dark:hover:text-zinc-50' // inactive link
-                    }
+                ? 'text-[#0099FF] dark:text-[#E6DDC4]' // active link
+                : 'text-zinc-600 hover:text-[#000000] dark:text-zinc-400 dark:hover:text-zinc-50' // inactive link
+              }
                     ${links.external ? 'ml-1' : ''} // external link styling
                   `}
                 >

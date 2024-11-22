@@ -13,9 +13,9 @@ interface SvgProps {
 
 const HomeSvg: React.FC<SvgProps> = ({ 
   className,
-  width = "24",
-  height = "24",
-  color = "currentColor"
+  width = '24',
+  height = '24',
+  color = 'currentColor',
 }): JSX.Element => {
   return (
     <svg

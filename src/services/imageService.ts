@@ -1,5 +1,5 @@
-import { DynamoDBClient, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DynamoDBClient, PutItemCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { v4 as uuidv4 } from 'uuid';
 import { dynamoDBClient } from '../lib/dynamodb/config';
@@ -29,13 +29,14 @@ interface ContentTypes {
 
 class ImageService {
   private readonly dynamoDb: DynamoDBClient;
+
   private readonly contentTypes: ContentTypes = {
     'jpg': 'image/jpeg',
     'jpeg': 'image/jpeg',
     'png': 'image/png',
     'gif': 'image/gif',
     'webp': 'image/webp',
-    'bmp': 'image/bmp'
+    'bmp': 'image/bmp',
   };
 
   constructor() {
@@ -49,7 +50,7 @@ class ImageService {
 
   private async saveMetadata(metadata: ImageMetadata): Promise<void> {
     const dbItem = {
-      TableName: "Image",
+      TableName: 'Image',
       Item: {
         imageId: { S: metadata.ImageID },
         fileName: { S: metadata.FileName },
@@ -58,8 +59,8 @@ class ImageService {
         temperature: { S: metadata.Temperature?.toString() || 'N/A' },
         childId: { S: metadata.ChildID },
         familyId: { S: metadata.FamilyID },
-        userId: { S: metadata.UserID }
-      }
+        userId: { S: metadata.UserID },
+      },
     };
 
     await this.dynamoDb.send(new PutItemCommand(dbItem));
@@ -78,7 +79,7 @@ class ImageService {
   async uploadImage(
     fileName: string, 
     image: string, 
-    temperature?: string
+    temperature?: string,
   ): Promise<ImageMetadata> {
     const imageID = uuidv4();
     const fileExtension = fileName.split('.').pop() || '';
@@ -87,7 +88,7 @@ class ImageService {
     const s3Url = await uploadToS3(
       image,
       s3FileName,
-      this.getContentType(fileName)
+      this.getContentType(fileName),
     );
 
     const metadata: ImageMetadata = {
@@ -98,18 +99,18 @@ class ImageService {
       Temperature: temperature,
       ChildID: 'child123', // Mock data
       FamilyID: 'family123',
-      UserID: 'user123'
+      UserID: 'user123',
     };
 
     await this.saveMetadata(metadata);
     return metadata;
   }
 
-  async getRecentImages(limit: number = 3): Promise<ImageResponse[]> {
+  async getRecentImages(limit = 3): Promise<ImageResponse[]> {
     try {
       const command = new ScanCommand({
-        TableName: "Image",
-        ProjectionExpression: "imageId, s3Url, temperature, uploadTimestamp",
+        TableName: 'Image',
+        ProjectionExpression: 'imageId, s3Url, temperature, uploadTimestamp',
         Limit: limit,
       });
 
@@ -145,19 +146,19 @@ class ImageService {
             return {
               imageUrl: base64Image,
               temperature: item.temperature?.S || 'N/A',
-              timestamp: item.uploadTimestamp?.S || new Date().toISOString()
+              timestamp: item.uploadTimestamp?.S || new Date().toISOString(),
             };
           } catch (error) {
             console.error(`Error fetching image ${s3Key}:`, error);
             return null;
           }
-        })
+        }),
       );
 
       return images
         .filter((image): image is ImageResponse => image !== null)
         .sort((a, b) => 
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
         );
 
     } catch (error) {

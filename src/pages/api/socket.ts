@@ -19,15 +19,15 @@ type NextApiResponseWithSocket = NextApiResponse & {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponseWithSocket
+  res: NextApiResponseWithSocket,
 ) {
   if (!res.socket.server.io) {
     const io = new IOServer(res.socket.server, {
       path: '/api/socket',
       addTrailingSlash: false,
       cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origin: '*',
+        methods: ['GET', 'POST'],
       },
       pingTimeout: 60000,
       pingInterval: 25000,

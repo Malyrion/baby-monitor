@@ -22,9 +22,9 @@ function BottomNav(): JSX.Element {
               className={`
                 flex h-full w-full flex-col items-center justify-center space-y-1
                 ${router.pathname === links.href 
-                  ? 'dark:text-[#fff9d9] text-[#0099FF]' // active link
-                  : 'dark:text-[#99A8B2] dark:hover:text-[#FEFBF6] text-[#3C4048] hover:text-[#F2DF3A]' // inactive link
-                }
+              ? 'dark:text-[#fff9d9] text-[#0099FF]' // active link
+              : 'dark:text-[#99A8B2] dark:hover:text-[#FEFBF6] text-[#3C4048] hover:text-[#F2DF3A]' // inactive link
+            }
               `}
             >
               {links.icon}

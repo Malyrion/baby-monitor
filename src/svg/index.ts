@@ -7,5 +7,5 @@ import BabySvg from './BabySvg';
 export {
   Insights,
   HomeSvg,
-  BabySvg
+  BabySvg,
 };

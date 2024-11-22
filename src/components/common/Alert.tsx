@@ -18,7 +18,7 @@ export const AlertContainer = () => {
         <div
           key={alert.id}
           style={{
-            marginTop: `${index * 0.5}rem`
+            marginTop: `${index * 0.5}rem`,
           }}
           className={`
             w-full sm:max-w-md transition-all duration-300 ease-in-out
