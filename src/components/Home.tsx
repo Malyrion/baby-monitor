@@ -1,4 +1,4 @@
-import { ImageUpload } from './index';
+import ImageUpload from './ImageUpload';
 import TemperatureDisplay from './TemperatureDisplay';
 
 /**
