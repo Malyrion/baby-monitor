@@ -88,20 +88,32 @@ const ImageUpload: React.FC = () => {
         temperature: temperature,
       });
 
-      showAlert('Image uploaded successfully!', 'success');
+      // Call handleUploadSuccess after successful upload
+      await handleUploadSuccess();
+      
       setImage(null);
       setFileName('');
     } catch (error: unknown) {
-      // Type guard for axios error
       if (axios.isAxiosError(error)) {
         showAlert(`Upload failed: ${error.response?.data?.message || error.message}`, 'error');
       } else {
-        // For non-axios errors
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
         showAlert(`Upload failed: ${errorMessage}`, 'error');
       }
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  const handleUploadSuccess = async () => {
+    try {
+      const event = new CustomEvent('imageUploaded');
+      window.dispatchEvent(event);
+      
+      showAlert('Image uploaded successfully!', 'success');
+    } catch (error) {
+      console.error('Upload error:', error);
+      showAlert('Failed to upload image', 'error');
     }
   };
 

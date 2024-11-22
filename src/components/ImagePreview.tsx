@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
 interface ImageData {
@@ -12,24 +12,40 @@ const ImagePreview = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchRecentImages = async () => {
-      try {
-        const response = await fetch('/api/images?limit=3');
-        if (!response.ok) {
-          throw new Error('Failed to fetch images');
-        }
-        const data = await response.json();
-        setImages(data.images);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Error fetching images');
-      } finally {
-        setIsLoading(false);
+  const fetchRecentImages = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/images?limit=3');
+      if (!response.ok) {
+        throw new Error('Failed to fetch images');
       }
-    };
-
-    fetchRecentImages();
+      const data = await response.json();
+      setImages(data.images);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error fetching images');
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchRecentImages();
+    
+    // Listen for new image uploads
+    const handleImageUploaded = () => {
+      fetchRecentImages();
+    };
+    
+    window.addEventListener('imageUploaded', handleImageUploaded);
+    
+    // Poll for new images every 30 seconds
+    const interval = setInterval(fetchRecentImages, 30000);
+    
+    return () => {
+      window.removeEventListener('imageUploaded', handleImageUploaded);
+      clearInterval(interval);
+    };
+  }, [fetchRecentImages]);
 
   if (isLoading) {
     return <div className="flex justify-center items-center h-64">Loading...</div>;
