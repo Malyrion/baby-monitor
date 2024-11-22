@@ -1,21 +1,44 @@
-import Link from 'next/link';
-import styles from '../styles/404.module.css';
+import Link from "next/link";
 
 /**
- * "Custom 404 page."
- * It returns a div with a cat SVG, a 404 message, a paragraph, and a link to return home
- * @returns A div with a cat, a 404, and a link to return home.
+ * Custom 404 page component
+ * Displays a 404 error message with a link to return home
+ * Includes responsive design and dark mode support
+ *
+ * @returns {JSX.Element} 404 error page
  */
 export default function FourOFour(): JSX.Element {
   return (
-    <div className={styles.container}>
-      <div className={styles.imageContainer}>
-      </div>
-      <div className={styles.text}>404</div>
-      <div className={styles.content}>
-        <p className={styles.bigText}>Page Not Found</p>
-        <p className={styles.paragraph}>Sorry, the page you are looking for doesn&lsquo;t exist.</p>
-        <Link href="/" className={styles.btn} title="Return Home">
+    <div className="w-full h-screen flex flex-col items-center justify-center">
+      <div className="w-7/12 md:w-4/12 lg:w-3/12"></div>
+
+      <div className="text-5xl font-bold">404</div>
+
+      {/* Content Section */}
+      <div className="flex flex-col items-center justify-center">
+        {/* Error Message */}
+        <p className="text-3xl md:text-4xl lg:text-5xl text-gray-800 dark:text-[#f2f2f2] mt-8">
+          Page Not Found
+        </p>
+
+        {/* Description */}
+        <p className="md:text-lg lg:text-xl text-gray-600 dark:text-[#cccccc] mt-8">
+          Sorry, the page you are looking for doesn&lsquo;t exist.
+        </p>
+
+        {/* Return Home Button */}
+        <Link
+          href="/"
+          title="Return Home"
+          className="
+            flex items-center space-x-2 
+            bg-[#0099ff] hover:bg-[#0087ff] 
+            text-gray-100 
+            px-4 py-2 mt-12 
+            rounded 
+            transition duration-150
+          "
+        >
           <span>Return Home</span>
         </Link>
       </div>

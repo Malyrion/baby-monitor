@@ -5,7 +5,6 @@
   },
   "extends": [
     "airbnb-typescript",
-    "airbnb/hooks",
     "next",
     "next/core-web-vitals",
     "prettier",

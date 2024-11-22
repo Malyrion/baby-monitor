@@ -1,12 +1,14 @@
-import { ImageUpload } from '../components/index';
 import Page from '../layouts/Page';
 import Section from '../layouts/Section';
 
+
 export default function Insights(): JSX.Element {
+
+
   return (
-    <Page title="Image">
-      <Section className="flex items-center justify-center">
-        <ImageUpload></ImageUpload>
+    <Page title="insights">
+      <Section>
+        <><p>Hello page</p></>
       </Section>
     </Page>
   );

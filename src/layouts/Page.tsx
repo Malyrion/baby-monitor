@@ -1,27 +1,60 @@
 import Head from 'next/head';
-import { BottomNav, Header } from '../components/index';
+import { BottomNav, HeaderNav } from '../components/index';
 
 /**
- * It's a React component that renders a page with a header, footer, and bottom navigation
- * @param  - title - The title of the page.
- * @returns A React component that renders a header, footer, and main content.
+ * Interface for Page component props
  */
-function Page({ title, className, children }: cat.PageProps): JSX.Element {
+interface PageProps {
+  /** Page title - will be prefixed with 'ButtonTech |' except for Home page */
+  title: string;
+  /** Optional className for the main content article */
+  className?: string;
+  /** Page content */
+  children: React.ReactNode;
+}
+
+/**
+ * Page component that provides consistent layout structure across the application.
+ * Automatically handles page titles and includes common navigation elements.
+ * 
+ * @component
+ * @param {PageProps} props - The component props
+ * @returns {JSX.Element} The page layout structure
+ * 
+ * @example
+ * return (
+ *   <Page title="Dashboard" className="dashboard-content">
+ *     <DashboardContent />
+ *   </Page>
+ * )
+ */
+const Page: React.FC<PageProps> = ({ 
+  title, 
+  className, 
+  children 
+}): JSX.Element => {
+  // Generate page title - special case for home page
   const pageTitle = title === 'Home' ? 'ButtonTech' : `ButtonTech | ${title}`;
 
   return (
     <>
+      {/* Head section for page metadata */}
       <Head>
         <title>{pageTitle}</title>
       </Head>
-      <Header />
+      <HeaderNav />
+
+      {/* Main content area */}
       <main>
-        <article className={className}>{children}</article>
+        <article className={className}>
+          {children}
+        </article>
       </main>
+
+      {/* Bottom navigation */}
       <BottomNav />
-      {/* <Footer /> */}
     </>
   );
-}
+};
 
 export default Page;
