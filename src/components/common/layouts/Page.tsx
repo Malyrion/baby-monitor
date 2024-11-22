@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { BottomNav, HeaderNav } from '../components/index';
+import { BottomNav, HeaderNav } from '../../index';
 
 /**
  * Interface for Page component props
