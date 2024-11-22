@@ -1,32 +1,23 @@
 import Head from 'next/head';
-import { BottomNav, HeaderNav } from '../../index';
+import BottomNav from '../BottomNav';
+import HeaderNav from '../HeaderNav';
 
 /**
  * Interface for Page component props
  */
 interface PageProps {
-  /** Page title - will be prefixed with 'ButtonTech |' except for Home page */
   title: string;
-  /** Optional className for the main content article */
   className?: string;
-  /** Page content */
   children: React.ReactNode;
 }
 
 /**
- * Page component that provides consistent layout structure across the application.
- * Automatically handles page titles and includes common navigation elements.
+ * Provides layout and title for the page
  * 
  * @component
  * @param {PageProps} props - The component props
  * @returns {JSX.Element} The page layout structure
  * 
- * @example
- * return (
- *   <Page title="Dashboard" className="dashboard-content">
- *     <DashboardContent />
- *   </Page>
- * )
  */
 const Page: React.FC<PageProps> = ({ 
   title, 

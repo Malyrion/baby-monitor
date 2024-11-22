@@ -12,6 +12,7 @@ interface UploadResponse {
     ImageID: string;
     Temperature: string;
     UploadTimestamp: string;
+    S3URL: string;
   };
 }
 
@@ -88,8 +89,7 @@ const ImageUpload: React.FC = () => {
         temperature: temperature,
       });
 
-      // Call handleUploadSuccess after successful upload
-      await handleUploadSuccess();
+      await handleUploadSuccess(response.data.metadata.S3URL);
       
       setImage(null);
       setFileName('');
@@ -105,12 +105,31 @@ const ImageUpload: React.FC = () => {
     }
   };
 
-  const handleUploadSuccess = async () => {
+  const handleUploadSuccess = async (imageUrl: string) => {
     try {
       const event = new CustomEvent('imageUploaded');
       window.dispatchEvent(event);
       
-      showAlert('Image uploaded successfully!', 'success');
+      // Log the URL to console
+      console.log('Uploaded image URL:', imageUrl);
+      
+      // Create custom alert message with HTML
+      const message = (
+        <div>
+          Image uploaded successfully!{' '}
+          <a 
+            href={imageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700 underline"
+            onClick={(e) => e.stopPropagation()} // Prevent alert from closing
+          >
+            View image
+          </a>
+        </div>
+      );
+      
+      showAlert(message, 'success');
     } catch (error) {
       console.error('Upload error:', error);
       showAlert('Failed to upload image', 'error');

@@ -1,12 +1,26 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { Socket, io } from 'socket.io-client';
 
+/**
+ * Temperature Context Type Definition
+ * @interface TemperatureContextType
+ * @property {string | null} currentTemperature - The current temperature reading
+ * @property {boolean} isLoading - Loading state indicator
+ * @property {string | null} error - Error message if any
+ */
 interface TemperatureContextType {
+  /** Current temperature reading, null if not available */
   currentTemperature: string | null;
+  /** Indicates if temperature data is being loaded */
   isLoading: boolean;
+  /** Error message if something goes wrong, null otherwise */
   error: string | null;
 }
 
+/**
+ * Interface for TemperatureContextType object structure
+ * @interface TemperatureContext
+ */
 const TemperatureContext = createContext<TemperatureContextType>({
   currentTemperature: null,
   isLoading: true,

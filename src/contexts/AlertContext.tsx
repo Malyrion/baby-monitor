@@ -1,18 +1,33 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 
+/**
+ * Defines the possible types of alerts
+ * @type {AlertType}
+ */
 export type AlertType = 'success' | 'error' | 'warning';
 
+
+/**
+ * Interface for Alert object structure
+ * @interface Alert
+ */
 export interface Alert {
   id: number;
-  message: string;
+  message: string ;
   type: AlertType;
   timeoutId?: NodeJS.Timeout;
   dismiss?: (id: number) => void;
 }
 
+/**
+ * Interface for Alert Context
+ * @interface AlertContextType
+ */
 interface AlertContextType {
+    /** Array of current alerts */
   alerts: Alert[];
-  showAlert: (message: string, type: AlertType) => void;
+  showAlert: (message: any, type: AlertType) => void;
+  /** Function to dismiss an alert */
   dismissAlert: (id: number) => void;
 }
 

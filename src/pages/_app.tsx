@@ -5,12 +5,15 @@ import { Nunito } from '@next/font/google';
 import { AlertProvider } from '../contexts/AlertContext';
 import { AlertContainer } from '../components/common/Alert';
 
+//Set Nunito font
+
 const nunito = Nunito({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-nunito',
 });
 
+//App component
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <AlertProvider>
