@@ -17,12 +17,10 @@ import TemperatureDisplay from './TemperatureDisplay';
  */
 function Home(): JSX.Element {
   return (
-    <>
-    <div className="flex flex-col items-center justify-center gap-8 py-8"> 
-    <TemperatureDisplay />
-        <ImageUpload />
-      </div>
-    </>
+    <div className="flex flex-col items-center justify-center gap-8 py-12 px-4 sm:py-16"> 
+      <TemperatureDisplay />
+      <ImageUpload />
+    </div>
   );
 }
 
