@@ -7,6 +7,7 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV !== "development",
   },
   images: {
+    unoptimized: true,
     domains: ['button-tech-demo.s3.eu-west-2.amazonaws.com'],
   },
   env: {
@@ -15,6 +16,7 @@ const nextConfig = {
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
     S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
   },
+  output: 'export',
 };
 
 const withPWA = require("next-pwa")({
