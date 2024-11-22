@@ -6,6 +6,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== "development",
   },
+  images: {
+    domains: ['button-tech-demo.s3.eu-west-2.amazonaws.com'],
+  },
   env: {
     REGION: process.env.REGION,
     ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,

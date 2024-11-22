@@ -1,4 +1,5 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { ScanCommand } from "@aws-sdk/client-dynamodb";
+import { dynamoDBClient } from '../lib/dynamodb/config';
 
 export interface TemperatureReading {
   readingId: string;
@@ -14,22 +15,35 @@ class TemperatureService {
   private isIncreasing = true;
 
   async getLatestReadings(limit: number = 10): Promise<TemperatureReading[]> {
-    return this.getMockReadings(limit);
-  }
-
-  private getMockReadings(limit: number): TemperatureReading[] {
-    const readings: TemperatureReading[] = [];
-    const now = new Date();
-    
-    for (let i = 0; i < limit; i++) {
-      readings.push({
-        readingId: (Date.now() - i * 1000).toString(),
-        temperature: this.generateTemperature(),
-        timestamp: new Date(now.getTime() - i * 30000).toISOString()
+    try {
+      const command = new ScanCommand({
+        TableName: "Temperature", // Changed to Temperatures table
+        ProjectionExpression: "temperatureId, temperature, #ts",
+        ExpressionAttributeNames: {
+          "#ts": "timestamp"
+        },
+        Limit: limit,
       });
+
+      const response = await dynamoDBClient.send(command);
+
+      if (!response.Items || response.Items.length === 0) {
+        return [];
+      }
+
+      const readings = response.Items.map(item => ({
+        readingId: item.temperatureId.S || '',
+        temperature: item.temperature.S || '',
+        timestamp: item.timestamp.S || ''
+      })).sort((a, b) => 
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      );
+
+      return readings;
+    } catch (error) {
+      console.error('Error fetching from DynamoDB:', error);
+      throw error;
     }
-    
-    return readings;
   }
 
   generateTemperature(): string {

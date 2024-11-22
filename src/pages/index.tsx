@@ -1,5 +1,5 @@
-import Page from '../layouts/Page';
-import Section from '../layouts/Section';
+import Page from '../components/common/layouts/Page';
+import Section from '../components/common/layouts/Section';
 import { Home } from '../components/index';
 
 

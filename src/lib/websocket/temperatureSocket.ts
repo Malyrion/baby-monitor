@@ -4,10 +4,16 @@ import { temperatureService } from '../../services/temperatureService';
 export function initializeTemperatureSocket(io: IOServer) {
   console.log('Setting up temperature socket');
   
+  let lastTemperature: string | null = null;
+  
   const interval = setInterval(() => {
     const temperature = temperatureService.generateTemperature();
-    console.log('Emitting temperature:', temperature);
-    io.emit('temperature', temperature);
+    
+    // Only emit if temperature has changed
+    if (temperature !== lastTemperature) {
+      lastTemperature = temperature;
+      io.emit('temperature', temperature);
+    }
   }, 5000); // Every 5 seconds
 
   io.on('connection', (socket) => {

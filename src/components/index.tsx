@@ -1,12 +1,17 @@
 import BottomNav from './common/BottomNav';
-// import FactCard from '../components/facts/FactCard';
 import Home from './Home';
 import HeaderNav from './common/HeaderNav';
-// import NavBar from './common/NavBar';
 import Meta from './Meta';
 import TemperatureDisplay from './TemperatureDisplay';
 import ImageUpload from './ImageUpload';
+import TemperatureGraph from './TemperatureGraph';
 
-
-/* Exporting the components files from the components folder. */
-export { BottomNav, HeaderNav, Home, Meta, TemperatureDisplay,ImageUpload };
+export { 
+  BottomNav, 
+  HeaderNav, 
+  Home, 
+  Meta, 
+  TemperatureDisplay, 
+  ImageUpload,
+  TemperatureGraph 
+};
