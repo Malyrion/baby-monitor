@@ -148,8 +148,6 @@ Example of S3 bucket with the image uploaded:
 - Documentation for socket.io was taken from: https://socket.io/docs/v4/
 - Coding AI models used Cursor, v0-Next.js, ChatGPT 
 
-### Versions ####
-
 ## Versions and Dependencies
 
 ### Core Dependencies
