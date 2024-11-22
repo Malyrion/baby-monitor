@@ -21,11 +21,14 @@ export interface TemperatureReading {
 class TemperatureService {
   // Temperature range constants in Celsius
   private MIN_TEMP = 34;   // Minimum temperature threshold
+
   private MAX_TEMP = 38;   // Maximum temperature threshold
+
   private TEMP_INCREMENT = 0.4;  // Temperature change increment
 
   // Current temperature state
   private currentTemp = this.MIN_TEMP;
+  
   private isIncreasing = true;  // Direction of temperature change
 
   /**

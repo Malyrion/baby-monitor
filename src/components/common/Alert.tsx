@@ -12,12 +12,6 @@ interface AlertStyleConfig {
 }
 
 /**
- * Interface for alert container props
- * (Empty for now but useful for future extensions)
- */
-interface AlertContainerProps {}
-
-/**
  * Alert style configurations based on alert type
  */
 const alertStyles: AlertStyleConfig = {
@@ -39,7 +33,7 @@ const alertStyles: AlertStyleConfig = {
  * <AlertContainer />
  * ```
  */
-export const AlertContainer: React.FC<AlertContainerProps> = () => {
+export const AlertContainer = () => {
   const { alerts, dismissAlert } = useAlert();
 
   /**
